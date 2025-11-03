@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=hifi_QC
 #SBATCH --partition=batch
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=120gb
 #SBATCH --time=24:00:00
