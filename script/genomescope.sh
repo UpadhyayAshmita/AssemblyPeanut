@@ -9,23 +9,14 @@
 #SBATCH --mail-user=au08019@uga.edu
 #SBATCH --mail-type=END,FAIL
 
-# -------------------------------
-# Load modules
-# -------------------------------
 module load Jellyfish/2.3.0-GCC-12.3.0
 module load R/4.3.2
 module load GenomeScope/2.0.1-foss-2023a-R-4.3.2
 
-# -------------------------------
-# Define directories
-# -------------------------------
 READS=/scratch/au08019/reviopeanut
 OUT=/scratch/au08019/reviopeanut/output/genomescope
 mkdir -p $OUT
 
-# -------------------------------
-# Parameters
-# -------------------------------
 k=21
 GENOME_SIZE=2.7e9
 
