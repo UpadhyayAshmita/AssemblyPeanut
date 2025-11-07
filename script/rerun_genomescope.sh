@@ -34,7 +34,8 @@ for histo in */*_21mer.histo; do
     Rscript --vanilla "$GENOMESCOPE_SCRIPT" \
         -i "$HISTO_DIR/$sample/${sample}_21mer.histo" \
         -o "$HISTO_DIR/$sample" \
-        -k 21
+        -k 21 \
+        -p 4 
 
     echo "[$(date)] Completed GenomeScope for $sample"
 done

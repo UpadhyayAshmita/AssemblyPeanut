@@ -48,4 +48,4 @@ done
 # Summarize all results using MultiQC
 echo "Aggregating QC reports with MultiQC..."
 multiqc $OUT -o $OUT
-echo "✅ QC complete! All reports are in: $OUT"
+echo "QC complete! All reports are in: $OUT"
