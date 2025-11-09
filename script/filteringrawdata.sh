@@ -12,7 +12,7 @@
 # Script: Filter PacBio HiFi reads ≥10 kb using seqtk
 
 
-module load seqtk  
+module load seqtk/1.4-GCC-13.3.0
 
 RAW_DIR=/scratch/au08019/reviopeanut
 OUT_DIR=${RAW_DIR}/filteredfastq_min10kb
