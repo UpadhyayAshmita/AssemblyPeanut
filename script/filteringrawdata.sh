@@ -1,32 +1,38 @@
 #!/bin/bash
-#SBATCH --job-name=filter_hifi_10kb
+#SBATCH --job-name=filter_10kb_array
 #SBATCH --partition=batch
-#SBATCH --cpus-per-task=4
 #SBATCH --ntasks=1
-#SBATCH --mem=128GB
-#SBATCH --time=12:00:00
-#SBATCH --output=/scratch/au08019/reviopeanut/logs/filter_hifi_10kb.%j.out
-#SBATCH --error=/scratch/au08019/reviopeanut/logs/filter_hifi_10kb.%j.err
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=256G
+#SBATCH --time=24:00:00
+#SBATCH --array=1-16
+#SBATCH --output=/scratch/au08019/reviopeanut/logs/filter_%A_%a.out
+#SBATCH --error=/scratch/au08019/reviopeanut/logs/filter_%A_%a.err
 #SBATCH --mail-user=au08019@uga.edu
 #SBATCH --mail-type=END,FAIL
-# Script: Filter PacBio HiFi reads ≥10 kb using seqtk
 
-
+# Runs each genotype as a separate array job (1–16)
 module load seqtk/1.4-GCC-13.3.0
+module load pigz/2.8-GCCcore-13.3.0
 
 RAW_DIR=/scratch/au08019/reviopeanut
 OUT_DIR=${RAW_DIR}/filteredfastq_min10kb
-MINLEN=10000   # 10 kb = 10,000 bp
+MINLEN=10000
+mkdir -p "$OUT_DIR" /scratch/au08019/reviopeanut/logs
 
-mkdir -p "${OUT_DIR}"
+# --- Identify file for this array task ---
+files=(${RAW_DIR}/*.fq.gz)
+fq=${files[$SLURM_ARRAY_TASK_ID-1]}
+base=$(basename "$fq")
+out=${OUT_DIR}/${base%.fq.gz}.min${MINLEN}.fq.gz
 
-echo "Filtering all .fq.gz files in ${RAW_DIR} to keep reads ≥${MINLEN} bp..."
-echo "Output will be saved in: ${OUT_DIR}"
-for fq in ${RAW_DIR}/*.fq.gz; do
-    base=$(basename "${fq}")
-    out="${OUT_DIR}/${base%.fq.gz}.min${MINLEN}.fq.gz"
-    echo "Processing: ${base}"
-    seqtk seq -L ${MINLEN} "${fq}" | gzip > "${out}"
-    echo "Done -> ${out}"
-done
-echo "All files filtered successfully."
+echo "Job ID: $SLURM_ARRAY_JOB_ID  |  Task ID: $SLURM_ARRAY_TASK_ID"
+echo "Filtering file: $fq"
+echo "Output file:    $out"
+echo "Keeping reads ≥ ${MINLEN} bp"
+
+# --- Run filtering ---
+seqtk seq -L $MINLEN "$fq" | pigz -p 4 > "$out"
+
+echo "Done: $base"
+echo "Completed at: $(date)"
