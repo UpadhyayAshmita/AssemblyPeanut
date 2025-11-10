@@ -3,7 +3,7 @@
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=256gb
+#SBATCH --mem=256G
 #SBATCH --time=36:00:00
 #SBATCH --output=/scratch/au08019/reviopeanut/output/genomescope/genomescope.%j.log
 #SBATCH --mail-user=au08019@uga.edu
