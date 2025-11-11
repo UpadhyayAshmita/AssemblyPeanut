@@ -10,9 +10,6 @@
 #SBATCH --mail-user=au08019@uga.edu
 #SBATCH --mail-type=END,FAIL
 
-# -----------------------------------------------------------
-# Convert all HiFiAsm .gfa outputs to .fa FASTA files
-# -----------------------------------------------------------
 
 WORKDIR=/scratch/au08019/reviopeanut/assembly
 
@@ -25,7 +22,7 @@ for d in ${WORKDIR}/*/; do
     cd "$d" || continue
     BASENAME=$(basename "$d")
 
-    echo "🧬 Processing $BASENAME ..."
+    echo "Processing $BASENAME ..."
 
     # Find all .p_ctg.gfa, hap1, hap2, etc.
     for f in ${BASENAME}.asm*.p_ctg.gfa; do
@@ -34,12 +31,12 @@ for d in ${WORKDIR}/*/; do
             echo "   Converting $f → $(basename $OUT)"
             awk '/^S/{print ">"$2"\n"$3}' "$f" > "$OUT"
         else
-            echo "   ⚠️  No file found for $f"
+            echo "No file found for $f"
         fi
     done
 
-    echo "✅ Done: $BASENAME"
+    echo " Done: $BASENAME"
     echo "---------------------------------------------"
 done
 
-echo "🎉 All conversions completed!"
+echo "All conversions completed!"
