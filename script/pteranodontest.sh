@@ -1,41 +1,32 @@
 #!/bin/bash
-#SBATCH --job-name=ptera_15X034_50k
-#SBATCH --partition=batch
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
+#SBATCH -J pteranodon_test
+#SBATCH --time=12:00:00
+#SBATCH -c 8
+#SBATCH -N 1
+#SBATCH -p khufu
 #SBATCH --mem=128G
-#SBATCH --time=24:00:00
-#SBATCH --output=/scratch/au08019/reviopeanut/logs/ptera_15X034_50k_%j.out
-#SBATCH --error=/scratch/au08019/reviopeanut/logs/ptera_15X034_50k_%j.err
-#SBATCH --mail-user=au08019@uga.edu
-#SBATCH --mail-type=END,FAIL
+#SBATCH -o "stds/stdout_%x_%J"
+#SBATCH -e "stds/stderr_%x_%J"
 
-#  Pteranodon scaffolding for one assembly (50 kb filtered)
+# Path to Pteranodon installation
+pteranodon="/cluster/home/wkorani/korani_aps/pteranodon"
+t=8
 
-module purge
-module load GCC/13.2.0
-module load Miniconda3/24.1.2-0
-source activate pteranodon_env
+# Reference genome (Tifrunner V2)
+ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
 
-# --- Input / Output paths ---
-REF=/scratch/au08019/reviopeanut/reference/tifrunner_v2.fa
-ASM=/scratch/au08019/reviopeanut/assembly/15X034-1-1-SSD-15/15X034-1-1-SSD-15.asm.bp.p_ctg.50k.fa
-OUTDIR=/scratch/au08019/reviopeanut/scaffolded/15X034-1-1-SSD-15
+# One of your query contigs (50k filtered)
+query="/cluster/lab/clevenger/Ashmita/assembly/TifTB.asm.bp.p_ctg.50k.fa"
 
-mkdir -p $OUTDIR
+# Output folder name
+out="TifTB_TR2_50k_scaffold "
 
-echo "Running Pteranodon scaffolding"
-echo "Reference : $REF"
-echo "Assembly  : $ASM"
-echo "OutputDir : $OUTDIR"
+# Minimum contig length threshold (1000 bp)
+len=1000
 
-bash ~/apps/Pteranodon/PteranodonBase.sh \
-    -ref $REF \
-    -query $ASM \
-    -o $OUTDIR/15X034-1-1-SSD-15 \
-    -t 32 \
-    -SegLen 20000 \
-    -MinQueryLen 0.05 \
-    --auto
+# Minimum percent identity
+min=1
 
-echo "Scaffolding completed for 15X034-1-1-SSD-15 (50 kb filtered)"
+# Run Pteranodon
+
+"$pteranodon"/get_plot_based_on_local_alignment.sh "$pteranodon" "$t" "$ref" "$query" "$out" "$len" "$min"
