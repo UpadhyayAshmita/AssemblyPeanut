@@ -16,7 +16,7 @@ t=8
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
 
 # One of the 50k filtered contigs
-query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_AU-23-10.asm.bp.p_ctg.50k.fa.gz"
+query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa.gz"
 
 # Output folder
 out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffolded"
