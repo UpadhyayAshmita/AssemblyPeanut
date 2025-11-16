@@ -16,7 +16,7 @@ source "$khufu_dir"/utilities/load_modules.sh
 #   Input paths
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
 query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa"
-out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffolded"
+out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffold"
 
 # Parameters
 SegLen=500000       # segment length to chop reference
