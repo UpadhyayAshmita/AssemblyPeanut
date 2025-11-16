@@ -1,31 +1,32 @@
 #!/bin/bash
-#SBATCH -J pteranodon_test
-#SBATCH --time=12:00:00
-#SBATCH -c 8
+#SBATCH -J ptero_AU23_10
+#SBATCH --time=24:00:00
+#SBATCH -c 24
 #SBATCH -N 1
 #SBATCH -p khufu
-#SBATCH --mem=128G
-#SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/pteranodon_%x_%J.out"
-#SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/pteranodon_%x_%J.err"
+#SBATCH --mem=180G
+#SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%J.out"
+#SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%J.err"
 
-# Path to Pteranodon installation
-pteranodon="/cluster/home/wkorani/korani_aps/pteranodon"
-t=8
 
-# Reference genome (Tifrunner V2)
+#   Load Khufu + Pteranodon env
+source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
+source "$khufu_dir"/utilities/load_modules.sh
+
+#   Input paths
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
-
-# One of the 50k filtered contigs
 query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa"
+out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffolded"
 
-# Output folder
-out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffold"
-
-# Minimum contig length threshold
-len=1000
-
-# Minimum percent identity
-min=1
-
-# Run Pteranodon
-"$pteranodon"/get_plot_based_on_local_alignment.sh "$pteranodon" "$t" "$ref" "$query" "$out" "$len" "$min"
+# Parameters
+SegLen=500000       # segment length to chop reference
+MinQueryLen=1000    # minimum contig length
+threads=24
+#   Run Pteranodon
+/cluster/projects/khufu/korani_projects/Pteranodon/scripts/PteranodonBase.sh \
+    -ref $ref \
+    -query $query \
+    -o $out \
+    -SegLen $SegLen \
+    -MinQueryLen $MinQueryLen \
+    -t $threads
