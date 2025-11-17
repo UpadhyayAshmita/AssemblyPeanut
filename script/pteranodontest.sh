@@ -19,8 +19,8 @@ query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa"
 out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffold"
 
 # Parameters
-SegLen=500000       # segment length to chop reference
-MinQueryLen=1000    # minimum contig length
+SegLen=1000       # segment length to chop reference
+MinQueryLen=1    # minimum contig length
 threads=24
 #   Run Pteranodon
 /cluster/projects/khufu/korani_projects/Pteranodon/scripts/PteranodonBase.sh \
