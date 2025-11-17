@@ -10,8 +10,14 @@
 
 
 #   Load Khufu + Pteranodon env
+# Load Khufu environment (defines $khufu_dir)
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
-source "$khufu_dir"/utilities/load_modules.sh
+
+# Load module dependencies (bwa, minimap2, R, samtools)
+source $khufu_dir/utilities/load_modules.sh
+
+source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
+source /cluster/projects/khufu/korani_projects/load_modules.sh
 
 #   Input paths
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
@@ -19,7 +25,7 @@ query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa"
 out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffold"
 
 # Parameters
-SegLen=1000       # segment length to chop reference
+SegLen=1000     # segment length to chop reference
 MinQueryLen=1    # minimum contig length
 threads=24
 #   Run Pteranodon
