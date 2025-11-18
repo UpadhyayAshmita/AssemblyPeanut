@@ -9,13 +9,7 @@
 #SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%J.err"
 
 
-#   Load Khufu + Pteranodon env
-# Load Khufu environment (defines $khufu_dir)
-source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
-
-# Load module dependencies (bwa, minimap2, R, samtools)
-source $khufu_dir/utilities/load_modules.sh
-
+# Load Khufu + Pteranodon env
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
 source /cluster/projects/khufu/korani_projects/load_modules.sh
 
@@ -35,4 +29,5 @@ threads=24
     -o $out \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
+    -auto 
     -t $threads
