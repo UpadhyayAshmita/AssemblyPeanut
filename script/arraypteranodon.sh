@@ -45,5 +45,5 @@ threads=24
     -o "$out" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
-    -auto \
+    -auto 1 \
     -t $threads
