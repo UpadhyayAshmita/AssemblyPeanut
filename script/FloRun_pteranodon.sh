@@ -1,33 +1,43 @@
 #!/bin/bash
-#SBATCH -J ptero_AU23_10
-#SBATCH --time=24:00:00
+#SBATCH -J ptero_single
+#SBATCH --time=48:00:00
 #SBATCH -c 24
 #SBATCH -N 1
 #SBATCH -p khufu
 #SBATCH --mem=180G
-#SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%J.out"
-#SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%J.err"
-
+#SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%j.out"
+#SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_%x_%j.err"
 
 # Load Khufu + Pteranodon env
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
 source /cluster/projects/khufu/korani_projects/load_modules.sh
 
-#   Input paths
-ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2.fa"
-query="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10.asm.bp.p_ctg.50k.fa"
-out="/cluster/lab/clevenger/Ashmita/assembly/AU-23-10_scaffold"
+INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly"
+ref="${INPUT_DIR}/ref/tifrunner_v2.fa"
+
+query="${INPUT_DIR}/FloRun52N.asm.bp.p_ctg.50k.fa"
+basename=$(basename "$query")
+sample=${basename%.asm.bp.p_ctg.50k.fa}
+
+# Output directory
+out="${INPUT_DIR}/${sample}_scaffold"
+mkdir -p "$out"
+
+echo "Running Pteranodon for sample: $sample"
+echo "Query:  $query"
+echo "Output: $out"
 
 # Parameters
-SegLen=1000     # segment length to chop reference
-MinQueryLen=1    # minimum contig length
+SegLen=1000
+MinQueryLen=1
 threads=24
-#   Run Pteranodon
+
+# Run Pteranodon
 /cluster/projects/khufu/korani_projects/Pteranodon/scripts/PteranodonBase.sh \
-    -ref $ref \
-    -query $query \
-    -o $out \
+    -ref "$ref" \
+    -query "$query" \
+    -o "$out" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
-    -auto 1 \  
+    -auto 1 \
     -t $threads
