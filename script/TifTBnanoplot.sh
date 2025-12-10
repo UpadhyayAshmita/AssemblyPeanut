@@ -20,7 +20,7 @@ OUT=/scratch/au08019/reviopeanut/output/qc_reports
 mkdir -p $OUT/nanoplot 
 
 # Generate NanoPlot QC for read length & quality
-f="$Reads/TifNV-HG.fq.gz"  
+f="$Reads/TifTB.fq.gz"  
 base=$(basename ${f%.*})
 
 echo "Running NanoPlot for: $base"
