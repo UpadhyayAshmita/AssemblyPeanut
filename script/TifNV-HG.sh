@@ -13,7 +13,7 @@ source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
 source /cluster/projects/khufu/korani_projects/load_modules.sh
 
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly"
-ref="${INPUT_DIR}/ref/tifrunner_v2.fa"
+ref="${INPUT_DIR}/ref/tifrunner_v2_filt.fa"
 
 query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.25k.fa"
 basename=$(basename "$query")
