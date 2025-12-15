@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J C2563-7_min1_seg1000
+#SBATCH -J TifNV-HG_min1_seg1000
 #SBATCH --time=48:00:00
 #SBATCH -c 24
 #SBATCH -N 1
@@ -15,7 +15,7 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly"
 ref="${INPUT_DIR}/ref/tifrunner_v2_filt.fa"
 
-query="${INPUT_DIR}/C2563-7.asm.bp.p_ctg.fa"
+query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fa"
 basename=$(basename "$query")
 sample=${basename%.asm.bp.p_ctg.fa}
 
