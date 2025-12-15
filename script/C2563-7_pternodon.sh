@@ -15,7 +15,7 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly"
 ref="${INPUT_DIR}/ref/tifrunner_v2_filt.fa"
 
-query="${INPUT_DIR}/AU-23-46.asm.bp.p_ctg.20k.fa"
+query="${INPUT_DIR}/C2563-7.asm.bp.p_ctg.20k.fa"
 basename=$(basename "$query")
 sample=${basename%.asm.bp.p_ctg.20k.fa}
 
