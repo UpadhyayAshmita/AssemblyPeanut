@@ -20,7 +20,7 @@ basename=$(basename "$query")
 sample=${basename%.asm.bp.p_ctg.25k.fa}
 
 # Output directory
-out="${INPUT_DIR}/${sample}_scaffold_25k_min1_5000"
+out="${INPUT_DIR}/${sample}_scaffold_25k_min1_2kb"
 mkdir -p "$out"
 
 echo "Running Pteranodon for sample: $sample"
@@ -28,7 +28,7 @@ echo "Query:  $query"
 echo "Output: $out"
 
 # Parameters
-SegLen=5000
+SegLen=2000
 MinQueryLen=1
 threads=24
 
@@ -39,5 +39,5 @@ threads=24
     -o "$out" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
-    -auto 1 \
+    -auto 0 \
     -t $threads
