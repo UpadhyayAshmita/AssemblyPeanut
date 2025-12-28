@@ -8,8 +8,12 @@
 #SBATCH -o /cluster/lab/clevenger/Ashmita/assembly/log/yarbs_%j.out
 #SBATCH -e /cluster/lab/clevenger/Ashmita/assembly/log/yarbs_%j.err
 
+# load only minimap2 module if you want (optional)
 module load cluster/minimap2/2.26
-module load python/3.12.1-gcc-13.1.0
+
+# activate your user-installed conda
+source /cluster/home/aupadhyay/yes/etc/profile.d/conda.sh
+conda activate yarbs
 
 cd /cluster/home/aupadhyay/YARBS/python_scripts || exit 1
 
