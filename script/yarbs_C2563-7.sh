@@ -9,7 +9,7 @@
 #SBATCH -e /cluster/lab/clevenger/Ashmita/assembly/log/yarbs_%j.err
 
 module load cluster/minimap2/2.26
-module load python
+module load python/3.12.1-gcc-13.1.0
 
 cd /cluster/home/aupadhyay/YARBS/python_scripts || exit 1
 
