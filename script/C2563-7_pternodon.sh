@@ -12,38 +12,39 @@
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
 source /cluster/projects/khufu/korani_projects/load_modules.sh
 
+# ---- INPUT ----
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/unfilt_assembly"
-ref="${INPUT_DIR}/ref/tifrunner_v2_filt.fa"
-
+ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
 query="${INPUT_DIR}/C2563-7.asm.bp.p_ctg.fa"
-basename=$(basename "$query")
-sample=${basename%.asm.bp.p_ctg.fa}
 
-# Output directory
-out="${INPUT_DIR}/${sample}_scaffold_autofix_min.01"
-mkdir -p "$out"
+# ---- OUTPUT (SEPARATE DIR) ----
+OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/C2563-7"
+mkdir -p "$OUTDIR"
 
-echo "Running Pteranodon for sample: $sample"
-echo "Query:  $query"
-echo "Output: $out"
+# ---- HARD-CODED PREFIX ----
+prefix="${OUTDIR}/C2563-7_Ptautofix_min01"
+
+echo "Running Pteranodon"
+echo "Query : $query"
+echo "Ref   : $ref"
+echo "Prefix: $prefix"
 
 # Parameters
 SegLen=1000
-MinQueryLen=.01
+MinQueryLen=0.01
 threads=32
 
 # Run Pteranodon
 /cluster/projects/khufu/korani_projects/Pteranodon/scripts/PteranodonBase.sh \
     -ref "$ref" \
     -query "$query" \
-    -o "$out" \
+    -o "$prefix" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
     -auto 1 \
     -t $threads
 
-
-
+# Reformat FASTA to single-line sequences
 awk '/^>/ {
         if (seq) print seq;
         print;
@@ -56,5 +57,5 @@ awk '/^>/ {
      END {
         print seq
      }' \
-  "${out}.fa" \
-> "${out}.joined.fa"
+  "${prefix}.fa" \
+> "${prefix}.joined.fa"
