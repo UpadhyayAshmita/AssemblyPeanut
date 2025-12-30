@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J ptero_C2563-7_autofix
 #SBATCH --time=48:00:00
-#SBATCH -c 24
+#SBATCH -c 32
 #SBATCH -N 1
 #SBATCH -p khufu
 #SBATCH --mem=180G
