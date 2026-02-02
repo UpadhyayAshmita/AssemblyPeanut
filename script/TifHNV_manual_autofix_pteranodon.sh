@@ -41,7 +41,7 @@ threads=32
     -o "$prefix" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
-    -auto 1 \
+    -auto 0 \
     -t $threads
 
 # Reformat FASTA to single-line sequences
