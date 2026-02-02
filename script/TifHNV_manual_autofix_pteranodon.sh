@@ -1,17 +1,12 @@
 #!/bin/bash
 #SBATCH -J ptero_TifHNV_autofix
-#SBATCH --time=4:00:00
+#SBATCH --time=48:00:00
 #SBATCH -c 32
 #SBATCH -N 1
 #SBATCH -p khufu
 #SBATCH --mem=180G
 #SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_autofix_%x_%j.out"
 #SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_autofix_%x_%j.err"
-
-set -euo pipefail
-
-# make sure log dir exists
-mkdir -p /cluster/lab/clevenger/Ashmita/assembly/log
 
 # Load Khufu + Pteranodon env
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
@@ -20,7 +15,7 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 # ---- INPUT ----
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/unfilt_assembly"
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
-query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fa"
+query="${INPUT_DIR}/TifTB.asm.bp.p_ctg.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
 OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifHNV_manual_autofix_min0.05_seg5k"
@@ -56,7 +51,11 @@ awk '/^>/ {
         seq="";
         next
      }
-     { seq = seq $0 }
-     END { print seq }' \
+     {
+        seq = seq $0
+     }
+     END {
+        print seq
+     }' \
   "${prefix}.fa" \
 > "${prefix}.joined.fa"
