@@ -1,12 +1,17 @@
 #!/bin/bash
 #SBATCH -J ptero_TifHNV_autofix
-#SBATCH --time=48:00:00
+#SBATCH --time=4:00:00
 #SBATCH -c 32
 #SBATCH -N 1
 #SBATCH -p khufu
 #SBATCH --mem=180G
 #SBATCH -o "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_autofix_%x_%j.out"
 #SBATCH -e "/cluster/lab/clevenger/Ashmita/assembly/log/ptero_autofix_%x_%j.err"
+
+set -euo pipefail
+
+# make sure log dir exists
+mkdir -p /cluster/lab/clevenger/Ashmita/assembly/log
 
 # Load Khufu + Pteranodon env
 source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
@@ -18,11 +23,11 @@ ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
 query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
-OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifHNV_manual_autofix"
+OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifHNV_manual_autofix_min0.05_seg5k"
 mkdir -p "$OUTDIR"
 
 # ---- HARD-CODED PREFIX ----
-prefix="${OUTDIR}/TifHNV_Ptautofix_min01"
+prefix="${OUTDIR}/TifHNV_Ptautofix_min0.05_seg5k"
 
 echo "Running Pteranodon"
 echo "Query : $query"
@@ -30,8 +35,8 @@ echo "Ref   : $ref"
 echo "Prefix: $prefix"
 
 # Parameters
-SegLen=1000
-MinQueryLen=0.01
+SegLen=5000
+MinQueryLen=0.05
 threads=32
 
 # Run Pteranodon
@@ -51,11 +56,7 @@ awk '/^>/ {
         seq="";
         next
      }
-     {
-        seq = seq $0
-     }
-     END {
-        print seq
-     }' \
+     { seq = seq $0 }
+     END { print seq }' \
   "${prefix}.fa" \
 > "${prefix}.joined.fa"
