@@ -18,7 +18,7 @@ ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
 query="${INPUT_DIR}/TifTB.asm.bp.p_ctg.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
-OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifTB_manual_autofix"
+OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifTB_manual_autofix_min0.05_seg5k"
 mkdir -p "$OUTDIR"
 
 # ---- HARD-CODED PREFIX ----
@@ -30,8 +30,8 @@ echo "Ref   : $ref"
 echo "Prefix: $prefix"
 
 # Parameters
-SegLen=1000
-MinQueryLen=0.01
+SegLen=5000
+MinQueryLen=0.05
 threads=32
 
 # Run Pteranodon
