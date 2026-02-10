@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=busco_array
 #SBATCH --partition=batch
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=200G
 #SBATCH --time=36:00:00
