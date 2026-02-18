@@ -51,13 +51,22 @@ module load SAMtools/1.21-GCC-13.3.0
 
 BASE=/scratch/au08019/reviopeanut/tetrasomy
 
-echo "Starting coverage calculation at $(date)"
+# echo "Starting coverage calculation at $(date)"
 
-bedtools coverage \
-  -a $BASE/windows/diploids_chr10.50kb.bed \
-  -b $BASE/map/TifTB.toDiploids.bam \
-  -mean \
-  > $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
+# bedtools coverage \
+#   -a $BASE/windows/diploids_chr10.50kb.bed \
+#   -b $BASE/map/TifTB.toDiploids.bam \
+#   -mean \
+#   > $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
 
-echo "Finished at $(date)"
-wc -l $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
+# echo "Finished at $(date)"
+# wc -l $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
+cd /scratch/au08019/reviopeanut/tetrasomy
+
+bedtools makewindows \
+  -g windows/diploids_chr10.genome \
+  -w 100000 \
+  > windows/diploids_chr10.100kb.bed
+
+wc -l windows/diploids_chr10.100kb.bed
+head windows/diploids_chr10.100kb.bed
