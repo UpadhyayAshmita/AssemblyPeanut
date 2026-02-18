@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=diploids_map
+#SBATCH --job-name=window_depths
 #SBATCH --partition=batch
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=160G
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=400G
 #SBATCH --time=24:00:00
 #SBATCH --output=/scratch/au08019/reviopeanut/tetrasomy/logs/%x.%j.out
 #SBATCH --error=/scratch/au08019/reviopeanut/tetrasomy/logs/%x.%j.err
