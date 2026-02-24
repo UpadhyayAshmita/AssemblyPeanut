@@ -24,12 +24,12 @@ READS=/scratch/au08019/reviopeanut/TifTB.fq.gz
 
 # ---- outputs ----
 mkdir -p $BASE/map $BASE/logs
-# BAM=$BASE/map/${SAMPLE}.toDiploids.bam
+BAM=$BASE/map/${SAMPLE}.toDiploids.bam
 
-# echo "[$(date)] Mapping $SAMPLE to diploid ref..."
-# echo "REF:   $REF"
-# echo "READS: $READS"
-# echo "OUT:   $BAM"
+echo "[$(date)] Mapping $SAMPLE to diploid ref..."
+echo "REF:   $REF"
+echo "READS: $READS"
+echo "OUT:   $BAM"
 
 # # ---- map -> sort ----
 # minimap2 -t ${SLURM_CPUS_PER_TASK} -ax map-hifi "$REF" "$READS" \
@@ -44,29 +44,29 @@ mkdir -p $BASE/map $BASE/logs
 # tail -n 12 $BASE/logs/${SAMPLE}.toDiploids.flagstat.txt
 
 
-set -euo pipefail
-
 module load BEDTools/2.31.1-GCC-13.3.0
 module load SAMtools/1.21-GCC-13.3.0
 
 BASE=/scratch/au08019/reviopeanut/tetrasomy
 
 # echo "Starting coverage calculation at $(date)"
+mkdir -p $BASE/windows
 
-# bedtools coverage \
-#   -a $BASE/windows/diploids_chr10.50kb.bed \
-#   -b $BASE/map/TifTB.toDiploids.bam \
-#   -mean \
-#   > $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
+cut -f1,2 $REF.fai > $BASE/windows/diploids_allchr.genome
 
-# echo "Finished at $(date)"
-# wc -l $BASE/cov/TifTB.diploids_chr10.50kb.meanDepth.tsv
-cd /scratch/au08019/reviopeanut/tetrasomy
+BASE=/scratch/au08019/reviopeanut/tetrasomy
+REF=$BASE/ref/diploids_combined.fa
 
+mkdir -p $BASE/windows
+
+# genome file (contig  length)
+cut -f1,2 ${REF}.fai > $BASE/windows/diploids_combined.genome
+
+# 100 kb windows
 bedtools makewindows \
-  -g windows/diploids_chr10.genome \
+  -g $BASE/windows/diploids_combined.genome \
   -w 100000 \
-  > windows/diploids_chr10.100kb.bed
+  > $BASE/windows/diploids_combined.100kb.bed
 
-wc -l windows/diploids_chr10.100kb.bed
-head windows/diploids_chr10.100kb.bed
+wc -l $BASE/windows/diploids_combined.100kb.bed
+head $BASE/windows/diploids_combined.100kb.bed
