@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=120G
+#SBATCH --mem=256G
 #SBATCH --time=04:00:00
 #SBATCH --output=/scratch/au08019/reviopeanut/tetrasomy/logs/%x.%j.out
 #SBATCH --error=/scratch/au08019/reviopeanut/tetrasomy/logs/%x.%j.err
