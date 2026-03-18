@@ -15,7 +15,7 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 # ---- INPUT ----
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/filt_assembly"
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
-query="${INPUT_DIR}/C2563-7.asm.bp.p_ctg.fixed.final.min20kb.fa.gz"
+query="${INPUT_DIR}/C2563-7.asm.bp.p_ctg.fixed.final.min20kb.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
 OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/C2563-7"
