@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J ptero_TifTB_autofix
+#SBATCH -J ptero_C2843-S11-14_autofix
 #SBATCH --time=48:00:00
 #SBATCH -c 32
 #SBATCH -N 1
@@ -15,14 +15,14 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 # ---- INPUT ----
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/filt_assembly"
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
-query="${INPUT_DIR}/TifTB.asm.bp.p_ctg.fixed.min30kb.fa"
+query="${INPUT_DIR}/C2843-S11-14.asm.bp.p_ctg.fixed.final.min20kb.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
-OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifTB"
+OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/C2843-S11-14"
 mkdir -p "$OUTDIR"
 
 # ---- HARD-CODED PREFIX ----
-prefix="${OUTDIR}/TifTB_Ptautofix_min01"
+prefix="${OUTDIR}/C2843-S11-14_Ptautofix_min01"
 
 echo "Running Pteranodon"
 echo "Query : $query"
