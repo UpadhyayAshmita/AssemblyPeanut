@@ -13,16 +13,16 @@ source /cluster/projects/khufu/korani_projects/KhufuEnv/KhufuEnv.sh
 source /cluster/projects/khufu/korani_projects/load_modules.sh
 
 # ---- INPUT ----
-INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/unfilt_assembly"
+INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/filt_assembly"
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
-query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fa"
+query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fixed_step04.min20kb.fa"
 
 # ---- OUTPUT (SEPARATE DIR) ----
-OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifHNV_manual_autofix_min0.05_seg5k"
+OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifNV-HG"
 mkdir -p "$OUTDIR"
 
 # ---- HARD-CODED PREFIX ----
-prefix="${OUTDIR}/TifHNV_Ptautofix_min0.05_seg5k"
+prefix="${OUTDIR}/TifNV-HG_Ptautofix_min01"
 
 echo "Running Pteranodon"
 echo "Query : $query"
@@ -30,8 +30,8 @@ echo "Ref   : $ref"
 echo "Prefix: $prefix"
 
 # Parameters
-SegLen=5000
-MinQueryLen=0.05
+SegLen=1000
+MinQueryLen=0.01
 threads=32
 
 # Run Pteranodon
@@ -41,6 +41,21 @@ threads=32
     -o "$prefix" \
     -SegLen $SegLen \
     -MinQueryLen $MinQueryLen \
-    -auto 0 \
+    -auto 1 \
     -t $threads
 
+# Reformat FASTA to single-line sequences
+awk '/^>/ {
+        if (seq) print seq;
+        print;
+        seq="";
+        next
+     }
+     {
+        seq = seq $0
+     }
+     END {
+        print seq
+     }' \
+  "${prefix}.fa" \
+> "${prefix}.joined.fa"
