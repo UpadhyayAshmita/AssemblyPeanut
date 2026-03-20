@@ -15,7 +15,7 @@ source /cluster/projects/khufu/korani_projects/load_modules.sh
 # ---- INPUT ----
 INPUT_DIR="/cluster/lab/clevenger/Ashmita/assembly/filt_assembly"
 ref="/cluster/lab/clevenger/Ashmita/assembly/ref/tifrunner_v2_filt.fa"
-query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.fixed_step04.min20kb.fa"
+query="${INPUT_DIR}/TifNV-HG.asm.bp.p_ctg.broken3.fa."
 
 # ---- OUTPUT (SEPARATE DIR) ----
 OUTDIR="/cluster/lab/clevenger/Ashmita/assembly/scaffold_autofix/TifNV-HG"
@@ -44,18 +44,3 @@ threads=32
     -auto 1 \
     -t $threads
 
-# Reformat FASTA to single-line sequences
-awk '/^>/ {
-        if (seq) print seq;
-        print;
-        seq="";
-        next
-     }
-     {
-        seq = seq $0
-     }
-     END {
-        print seq
-     }' \
-  "${prefix}.fa" \
-> "${prefix}.joined.fa"
